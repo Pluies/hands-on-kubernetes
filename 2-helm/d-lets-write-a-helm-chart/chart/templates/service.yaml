@@ -1,0 +1,18 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: nginx
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 80
+
