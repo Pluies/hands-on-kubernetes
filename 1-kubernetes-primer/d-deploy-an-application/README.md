@@ -9,7 +9,7 @@ First, let's create our own namespace:
 
 And set it as the current namespace:
 
-    kubectl config set "contexts."`kubectl config current-context`".namespace" $MY_NAME
+    kubectl config set "contexts.$(kubectl config current-context).namespace" $MY_NAME
 
 (This will edit the kubeconfig file to set the namespace – it can also be edited manually)
 
