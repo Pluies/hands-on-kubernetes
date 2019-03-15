@@ -1,5 +1,5 @@
 namespace: CHANGEME
-deployed-by:
+deployedBy:
 replicas: 3
 nginx:
   version: 1.15-alpine

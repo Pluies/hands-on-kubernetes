@@ -6,7 +6,7 @@ metadata:
   name: nginx
   labels:
     app: nginx
-    deployed-by: {{ .Values.deployed-by }}
+    deployedBy: {{ .Values.deployedBy }}
 spec:
   replicas: {{ .Values.replicas }}
   selector:
