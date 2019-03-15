@@ -3,6 +3,8 @@ What's a kubeconfig file?
 
 A kubeconfig file tells kubectl and other tools how to connect to one or more clusters.
 
+Defaults to `~/.kube/config`
+
 It contains:
 - A list of servers with:
  - The URL of the APIserver, so you know who to talk to
@@ -11,6 +13,7 @@ It contains:
 - Contexts to group api endpoint + authentication + namespace into one
 
 In practice:
+
 ```yaml
 apiVersion: v1
 kind: Config
