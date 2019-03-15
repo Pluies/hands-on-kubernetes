@@ -5,34 +5,34 @@ What's kubectl?
 - Can be used to get data:
 
 ```
-    kubectl get pods
-    kubectl get pod foo
-    kubectl describe pod foo
+kubectl get pods
+kubectl get pod foo
+kubectl describe pod foo
 ```
 
 - Get logs:
 
 ```
-    kubectl logs foo
+kubectl logs foo
 ```
 
 - Exec into a container:
 
 ```
-    kubectl exec foo
+kubectl exec foo
 ```
 
 - Edit stuff:
 
 ```
-    kubectl apply -f things.yaml
-    kubectl edit pod foo
+kubectl apply -f things.yaml
+kubectl edit pod foo
 ```
 
 - Delete stuff:
 
 ```
-    kubectl delete pod foo
+kubectl delete pod foo
 ```
 
 - And more!
