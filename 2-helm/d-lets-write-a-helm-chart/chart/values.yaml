@@ -1,0 +1,4 @@
+# Value to define when the job that cleans old releases and namespaces is executed
+CleanJob:
+  suspended: "false" # if true the job will not be executed
+  schedule: "0 */8 * * *" #Schedule to Run Every 8 hours
