@@ -2,6 +2,8 @@ kind: Service
 apiVersion: v1
 metadata:
   name: nginx
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
 spec:
   type: LoadBalancer
   selector:

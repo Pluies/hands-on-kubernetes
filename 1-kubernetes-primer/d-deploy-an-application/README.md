@@ -11,7 +11,7 @@ And set it as the current namespace:
 
     kubectl config set "contexts."`kubectl config current-context`".namespace" $MY_NAME
 
-(This will edit the kubeconfig file, we can also edit it manually)
+(This will edit the kubeconfig file to set the namespace – it can also be edited manually)
 
 Now let's create a Deployment:
 
@@ -19,9 +19,25 @@ Now let's create a Deployment:
 
 More info: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 
+See what happened
+-----------------
+
+```
+kubectl get deployments
+```
+
+```
+kubectl get pods
+```
+
+```
+kubectl port-forward deployment/nginx 8080:80
+```
+-> And open http://127.0.0.1:8080
+
 Questions
 ---------
 
 Why a Deployment and not a Pod directly?
 
-Why a Deployment and not a ReplicaSet?
+What happens when a Pod gets deleted?
