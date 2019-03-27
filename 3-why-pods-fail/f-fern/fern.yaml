@@ -1,0 +1,55 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: fern
+spec:
+  selector:
+    app: fern
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fern
+  labels:
+    app: fern
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fern
+  template:
+    metadata:
+      labels:
+        app: fern
+    spec:
+      containers:
+      - name: fern
+        image: pluies/hands-on-kubernetes:fern
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 20m
+            memory: 15M
+          limits:
+            cpu: 200m
+            memory: 15M
+        readinessProbe:
+          httpGet:
+            path: /ping
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 1
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 1
+        ports:
+        - containerPort: 8080

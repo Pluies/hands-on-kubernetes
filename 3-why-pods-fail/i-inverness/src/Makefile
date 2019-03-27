@@ -1,4 +1,4 @@
-APP = visual
+APP = inverness
 COMMIT_ID := $(shell git rev-parse HEAD)
 
 build:

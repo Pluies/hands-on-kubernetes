@@ -2,11 +2,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-        #  namespace: CHANGEME
-  name: a-frame
+  name: boundary
 spec:
   selector:
-    app: a-frame
+    app: boudary
   ports:
   - name: http
     protocol: TCP
@@ -16,22 +15,22 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-        #  namespace: CHANGEME
-  name: a-frame
+  name: boundary
   labels:
-    app: a-frame
+    app: boundary
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: a-frame
+      app: boundary
   template:
     metadata:
       labels:
-        app: a-frame
+        app: boundary
     spec:
       containers:
-      - name: a-frame
-        image: pluies/hands-on-kubernetes:a-frame
+      - name: boundary
+        image: pluies/hands-on-kubernetes:boundary
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080

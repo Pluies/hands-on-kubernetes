@@ -1,0 +1,73 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hands-on-kubernetes-leaderboard
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: hands-on-kubernetes-leaderboard
+  name: leaderboard
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
+spec:
+  type: LoadBalancer
+  selector:
+    app: leaderboard
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: hands-on-kubernetes-leaderboard
+  name: leaderboard
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  namespace: hands-on-kubernetes-leaderboard
+  name: leaderboard
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: leaderboard
+  namespace: hands-on-kubernetes-leaderboard
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: hands-on-kubernetes-leaderboard
+  name: leaderboard
+  labels:
+    app: leaderboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: leaderboard
+  template:
+    metadata:
+      labels:
+        app: leaderboard
+    spec:
+      serviceAccountName: leaderboard
+      containers:
+      - name: leaderboard
+        imagePullPolicy: Always
+        image: pluies/hands-on-kubernetes:leaderboard
+        env:
+        - name: "IN_CLUSTER"
+          value: "true"
+        - name: "SERVICES"
+          value: "a-frame,boundary,caroline,doughboy,explorer,fern,grey,highland"
+        ports:
+        - containerPort: 8080
+

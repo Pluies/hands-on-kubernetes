@@ -1,0 +1,36 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: a-frame
+spec:
+  selector:
+    app: a-frame
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: a-frame
+  labels:
+    app: a-frame
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: a-frame
+  template:
+    metadata:
+      labels:
+        app: a-frame
+    spec:
+      containers:
+      - name: a-frame
+        image: pluies/hands-on-kubernetes:a-frame
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080

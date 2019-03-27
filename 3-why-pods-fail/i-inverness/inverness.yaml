@@ -1,0 +1,55 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: inverness
+spec:
+  selector:
+    app: inverness
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inverness
+  labels:
+    app: inverness
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inverness
+  template:
+    metadata:
+      labels:
+        app: inverness
+    spec:
+      containers:
+      - name: inverness
+        image: pluies/hands-on-kubernetes:inverness
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 20m
+            memory: 15T
+          limits:
+            cpu: 200m
+            memory: 15T
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 1
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 1
+        ports:
+        - containerPort: 8080

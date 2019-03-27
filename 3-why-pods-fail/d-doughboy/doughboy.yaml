@@ -1,0 +1,55 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: doughboy
+spec:
+  selector:
+    app: doughboy
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: doughboy
+  labels:
+    app: doughboy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: doughboy
+  template:
+    metadata:
+      labels:
+        app: doughboy
+    spec:
+      containers:
+      - name: doughboy
+        image: pluies/hands-on-kubernetes:doughboy
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 20m
+            memory: 15M
+          limits:
+            cpu: 200m
+            memory: 15M
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 9090
+          initialDelaySeconds: 3
+          periodSeconds: 1
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 9090
+          initialDelaySeconds: 3
+          periodSeconds: 1
+        ports:
+        - containerPort: 8080

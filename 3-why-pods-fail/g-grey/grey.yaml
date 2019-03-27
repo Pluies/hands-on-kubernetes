@@ -1,0 +1,54 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: grey
+spec:
+  selector:
+    app: grey
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grey
+  labels:
+    app: grey
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grey
+  template:
+    metadata:
+      labels:
+        app: grey
+    spec:
+      containers:
+      - name: grey
+        image: pluies/hands-on-kubernetes:grey
+        resources:
+          requests:
+            cpu: 20m
+            memory: 15M
+          limits:
+            cpu: 20m
+            memory: 15M
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 1
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 1
+        ports:
+        - containerPort: 8080

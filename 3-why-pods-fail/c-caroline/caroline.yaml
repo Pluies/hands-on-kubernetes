@@ -1,0 +1,55 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: caroline
+spec:
+  selector:
+    app: caroline
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: caroline
+  labels:
+    app: caroline
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: caroline
+  template:
+    metadata:
+      labels:
+        app: caroline
+    spec:
+      containers:
+      - name: caroline
+        image: pluies/hands-on-kupernetes:caroline
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 20m
+            memory: 15M
+          limits:
+            cpu: 200m
+            memory: 15M
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 1
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 1
+        ports:
+        - containerPort: 8080
