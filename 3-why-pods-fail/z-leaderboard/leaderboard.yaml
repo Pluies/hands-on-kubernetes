@@ -9,10 +9,7 @@ kind: Service
 metadata:
   namespace: hands-on-kubernetes-leaderboard
   name: leaderboard
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
 spec:
-  type: LoadBalancer
   selector:
     app: leaderboard
   ports:
@@ -67,7 +64,7 @@ spec:
         - name: "IN_CLUSTER"
           value: "true"
         - name: "SERVICES"
-          value: "a-frame,boundary,caroline,doughboy,explorer,fern,grey,highland"
+          value: "a-frame,boundary,caroline,doughboy,explorer,fern,grey,highland,inverness"
         ports:
         - containerPort: 8080
 
