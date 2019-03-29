@@ -16,6 +16,21 @@ Two of them are special:
 
 All other folders will give you trouble :)
 
+Useful commands
+---------------
+
+All the information needed to debug these cases can be found with the following commands:
+- `kubectl get pods` to list the pods
+- `kubectl get pods -l app=name` to list pods based on a label, as a Service does
+- `kubectl describe pod $PODNAME` to get more info on a specific pod
+- `kubectl logs -f $PODNAME` to tail the logs of a given pod
+- `kubectl logs $PODNAME -p` to get the logs of the given pod before it crashed (`-p` is short for `--previous`)
+
+The official documentation has some really well-written guides to debugging:
+- [Debug Pods](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-pod-replication-controller/)
+- [Debug Services](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-service/)
+- [Determine the Reason for Pod Failure](https://kubernetes.io/docs/tasks/debug-application-cluster/determine-reason-pod-failure/)
+
 Help/hints
 ----------
 
