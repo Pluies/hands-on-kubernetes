@@ -22,6 +22,7 @@ Useful commands
 All the information needed to debug these cases can be found with the following commands:
 - `kubectl get pods` to list the pods
 - `kubectl get pods -l app=name` to list pods based on a label, as a Service does
+- `kubectl get endpoints $SERVICE_NAME` to list endpoints being used by a Service
 - `kubectl describe pod $PODNAME` to get more info on a specific pod
 - `kubectl logs -f $PODNAME` to tail the logs of a given pod
 - `kubectl logs $PODNAME -p` to get the logs of the given pod before it crashed (`-p` is short for `--previous`)
