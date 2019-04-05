@@ -17,10 +17,8 @@ Thankfully, Kubernetes is pretty good at handling Pods failure cases.
 | --- | --- | --- |
 | Pod crashing | If it happens infrequently, merely an increase in the Restart Count.
 If too frequent, Kubernetes will back off restarting the container and show the status as `CrashLoopBackoff` | Use `restart: Always` on your container definition so that Kubernetes will restart them if they crash (it is the default) |
-| Pod becomes unresponsive | If the pod has a `readinessProbe` defined, this probe will start failing and traffic from a Service will stop being directed to the pod, preventing users from hitting an unresponsive pod. The Pod status will show as not ready.
-If all pods in a service become unresponsive, the whole service will start failing. | Define `readinessProbe` to ensure traffic always goes to healthy pods, and `livenessProbe` to ensure pods get restarted if they're unresponsive. |
-| New release of a service is broken | Kubernetes will try and bring up new Pods by doing a rolling update, and, noticing these pods are not coming up healthy, will stop the deployment. Some healthy pods will be left from the previous ReplicaSet, so existing traffic should not be impacted. | Monitor deployments to ensure they go through properly.
-Monitor ReplicaSet to ensure the desired number of replicas is equal to the actual number of pods. |
+| Pod becomes unresponsive | If the pod has a `readinessProbe` defined, this probe will start failing and traffic from a Service will stop being directed to the pod, preventing users from hitting an unresponsive pod. The Pod status will show as not ready. If all pods in a service become unresponsive, the whole service will start failing. | Define `readinessProbe` to ensure traffic always goes to healthy pods, and `livenessProbe` to ensure pods get restarted if they're unresponsive. |
+| New release of a service is broken | Kubernetes will try and bring up new Pods by doing a rolling update, and, noticing these pods are not coming up healthy, will stop the deployment. Some healthy pods will be left from the previous ReplicaSet, so existing traffic should not be impacted. | Monitor deployments to ensure they go through properly. Monitor ReplicaSet to ensure the desired number of replicas is equal to the actual number of pods. |
 
 Nodes
 -----
